@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grader</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<p>Upload a file to start grading it</p>
+	<form class="code-upload">
+		<input type="file" name="">
+	</form>
+
+	<!-- Button to download TSV file with lines -> grades -->
+	<p>Download a TSV file with two columns: line numbers -> grades</p>
+	<button class="download">Download TSV</button>
+
+	<!-- Container for code -->
+	<div id="code-container">
+	</div>
+
+	
+	
+
+	<!-- Form for inputting grades -->
+	<form class="grade-form">
+		<input id="grade-input" type="number" name="grade">
+		<input type="submit" name="">
+	</form>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+</html>

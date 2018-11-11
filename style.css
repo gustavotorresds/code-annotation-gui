@@ -1,0 +1,26 @@
+body { 
+	font-family: monospace;
+}
+
+pre {
+	padding: 0;
+	margin: 0;
+}
+
+.grade-form {
+	position: fixed;
+	top: 30%;
+	right: 30px;
+	padding: 10px;
+	font-size: 20pt;
+	display: none;
+	background-color: rgba(0, 0, 0, 0.2)
+}
+
+tr {
+	background-color: none;
+}
+
+tr.active {
+	background-color: #B8C5FF;
+}
