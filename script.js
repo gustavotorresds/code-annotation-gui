@@ -19,6 +19,12 @@ $(document).ready(function() {
 
 	    		const row = $(document.createElement('tr'));
 	    		row.addClass('code-line');
+
+	    		// TODO: setting the id of the rows to be just an index is pretty lame,
+	    		// but it was the easiest quick-n-dirty way I could find of getting the
+	    		// line numbers without doing suboptimal parsing. Any ideas of how to make
+	    		// this better? Can we just use some other attribute within the element to
+	    		// track which line number it is?
 	    		row.attr('id', i);
 
 	    		// We add <pre> to keep tabs showing.
