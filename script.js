@@ -76,6 +76,10 @@ $(document).ready(function() {
 
     	$('#' + activeLine).removeClass('active');
 
+    	for(let i = activeLine; i <= activeLineEnd; i++) {
+    		$('#' + i).addClass('graded');
+    	}
+
     	const grade = parseInt(event.target.grade.value);
     	grades.set(tuple(activeLine, activeLineEnd), grade);
     	event.target.grade.value = '';
