@@ -3,12 +3,16 @@ $(document).ready(function() {
 	const grades = new Map();
 
 	let activeLine = null;
+	let activeLineEnd = null;
+
+	let fileName = 'my-annotated-code';
 
 	$('.code-upload').change(function(event) {
 		$('#code-container').html('');
 
     	const table = $(document.createElement('table'))
     	const file = event.target.files[0];
+    	fileName = file.name.substring(0, file.name.indexOf('.'));
 
     	var reader = new FileReader();
 	    reader.onload = function(e){
@@ -46,18 +50,24 @@ $(document).ready(function() {
 
     // Add functionality to set grade to each line
 	function addEventToCodeLineListeners() {
-		console.log('on it');
-		$('.code-line').click(function(event) {
+		$('.code-line').mousedown(function(event) {
 			if(activeLine) {
 				$('#' + activeLine).removeClass('active');
 			}
 
 			// Target element in <pre>, so we get it's parent's parent.
 	    	const row = $(event.target.parentNode.parentNode);
-	    	activeLine = row.attr('id');
+	    	activeLine = parseInt(row.attr('id'));
+	    	activeLineEnd = parseInt(row.attr('id'));
 	    	row.addClass('active');
 	    	$('.grade-form').css('display', 'block');
 	    	$('#grade-input').focus();
+	    });
+
+	    $('.code-line').mouseup(function(event) {
+			// Target element in <pre>, so we get it's parent's parent.
+	    	const row = $(event.target.parentNode.parentNode);
+	    	activeLineEnd = parseInt(row.attr('id'));
 	    });
 	}
 
@@ -66,8 +76,8 @@ $(document).ready(function() {
 
     	$('#' + activeLine).removeClass('active');
 
-    	const grade = event.target.grade.value;
-    	grades.set(activeLine, grade);
+    	const grade = parseInt(event.target.grade.value);
+    	grades.set(tuple(activeLine, activeLineEnd), grade);
     	event.target.grade.value = '';
 
     	$('.grade-form').css('display', 'none');
@@ -76,7 +86,7 @@ $(document).ready(function() {
     });
 
     $('.download').click(function(event) {
-    	download('hello.tsv', formatContent(grades));
+    	download(fileName + '.tsv', formatContent(grades));
     });
 
     function download(filename, text) {
@@ -95,10 +105,40 @@ $(document).ready(function() {
 	// Each line and respective grade are separated by a tab.
 	// Each sample is separated by a breakline character.
 	function formatContent(map) {
-		let f = "Line\tGrade\n";
+		let f = "LineStart\tLineEnd\tGrade\n";
 		for (var [key, value] of map) {
-		  f += (key + '\t' + value + '\n');
+		  f += (key[0] + '\t' + key[1] + '\t' + value + '\n');
 		}
 		return f;
 	};
+
+	// V junjy element created to support Map with tuples (doesn't work with std arrays).
+	// Src: https://stackoverflow.com/questions/21838436/map-using-tuples-or-objects
+	// TODO: use some standard library or find a better way to represent info.
+	let tuple = (function() {
+	    let map = new Map();
+
+	    function tuple() {
+	        let current = map;
+	        let args = Object.freeze(Array.prototype.slice.call(arguments));
+
+	        for (let item of args) {
+	            if (current.has(item)) {
+	                current = current.get(item);
+	            } else {
+	                let next = new Map();
+	                current.set(item, next);
+	                current = next;
+	            }
+	        }
+
+	        if (!current.final) {
+	            current.final = args;
+	        }
+
+	        return current.final;
+	    }
+
+	    return tuple;
+	})();
 });
