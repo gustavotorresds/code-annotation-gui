@@ -21,6 +21,16 @@ pre {
 	background-color: rgba(0, 0, 0, 0.2)
 }
 
+.remove-grade {
+	position: fixed;
+	top: 5%;
+	right: 30px;
+	padding: 10px;
+	font-size: 10pt;
+	display: none;
+	background-color: rgba(255, 0, 0, 0.2)
+}
+
 tr {
 	background-color: none;
 }

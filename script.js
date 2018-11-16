@@ -72,6 +72,10 @@ $(document).ready(function() {
 	    		$('#' + i).addClass('active');
 	    	}
 
+	    	if(grades.has(tuple(activeLine, activeLineEnd))) {
+	    		$('.remove-grade').css('display', 'block');
+	    	}
+
 	    	$('#grade-input').focus();
 	    });
 	}
@@ -89,6 +93,7 @@ $(document).ready(function() {
     	event.target.grade.value = '';
 
     	$('.grade-form').css('display', 'none');
+    	$('.remove-grade').css('display', 'none');
 
     	console.log(grades);
     });
@@ -119,6 +124,17 @@ $(document).ready(function() {
 		}
 		return f;
 	};
+
+	$('.remove-grade').click(function(event) {
+		for(let i = activeLine; i <= activeLineEnd; i++) {
+    		$('#' + i).removeClass('graded');
+    		$('#' + i).removeClass('active');
+    	}
+    	grades.delete(tuple(activeLine, activeLineEnd));
+
+    	$('.grade-form').css('display', 'none');
+    	$('.remove-grade').css('display', 'none');
+	});
 
 	// V junjy element created to support Map with tuples (doesn't work with std arrays).
 	// Src: https://stackoverflow.com/questions/21838436/map-using-tuples-or-objects
