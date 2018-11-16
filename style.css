@@ -1,4 +1,8 @@
-body { 
+body {
+	font-family: sans-serif;
+}
+
+.code-upload { 
 	font-family: monospace;
 }
 

@@ -52,7 +52,9 @@ $(document).ready(function() {
 	function addEventToCodeLineListeners() {
 		$('.code-line').mousedown(function(event) {
 			if(activeLine) {
-				$('#' + activeLine).removeClass('active');
+				for(let i = activeLine; i <= activeLineEnd; i++) {
+		    		$('#' + i).removeClass('active');
+		    	}
 			}
 
 			// Target element in <pre>, so we get it's parent's parent.
@@ -61,13 +63,18 @@ $(document).ready(function() {
 	    	activeLineEnd = parseInt(row.attr('id'));
 	    	row.addClass('active');
 	    	$('.grade-form').css('display', 'block');
-	    	$('#grade-input').focus();
 	    });
 
 	    $('.code-line').mouseup(function(event) {
 			// Target element in <pre>, so we get it's parent's parent.
 	    	const row = $(event.target.parentNode.parentNode);
 	    	activeLineEnd = parseInt(row.attr('id'));
+
+	    	for(let i = activeLine; i <= activeLineEnd; i++) {
+	    		$('#' + i).addClass('active');
+	    	}
+
+	    	$('#grade-input').focus();
 	    });
 	}
 
