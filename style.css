@@ -25,10 +25,10 @@ tr {
 	background-color: none;
 }
 
-tr.active {
-	background-color: #B8C5FF;
-}
-
 tr.graded {
 	background-color: #E3E3E3;
+}
+
+tr.active {
+	background-color: #B8C5FF;
 }

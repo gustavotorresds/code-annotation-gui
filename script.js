@@ -8,8 +8,6 @@ $(document).ready(function() {
 	let fileName = 'my-annotated-code';
 
 	$('.code-upload').change(function(event) {
-		$('#code-container').html('');
-
     	const table = $(document.createElement('table'))
     	const file = event.target.files[0];
     	fileName = file.name.substring(0, file.name.indexOf('.'));
@@ -51,7 +49,7 @@ $(document).ready(function() {
     // Add functionality to set grade to each line
 	function addEventToCodeLineListeners() {
 		$('.code-line').mousedown(function(event) {
-			if(activeLine) {
+			if(!isNaN(activeLine)) {
 				for(let i = activeLine; i <= activeLineEnd; i++) {
 		    		$('#' + i).removeClass('active');
 		    	}
@@ -60,7 +58,7 @@ $(document).ready(function() {
 			// Target element in <pre>, so we get it's parent's parent.
 	    	const row = $(event.target.parentNode.parentNode);
 	    	activeLine = parseInt(row.attr('id'));
-	    	activeLineEnd = parseInt(row.attr('id'));
+	    	activeLineEnd = activeLine
 	    	row.addClass('active');
 	    	$('.grade-form').css('display', 'block');
 	    });
@@ -81,9 +79,8 @@ $(document).ready(function() {
     $('.grade-form').submit(function(event) {
     	event.preventDefault();
 
-    	$('#' + activeLine).removeClass('active');
-
     	for(let i = activeLine; i <= activeLineEnd; i++) {
+    		$('#' + i).removeClass('active');
     		$('#' + i).addClass('graded');
     	}
 
