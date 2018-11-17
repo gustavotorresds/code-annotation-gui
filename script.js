@@ -101,7 +101,7 @@ $(document).ready(function() {
     });
 
     $('.download').click(function(event) {
-    	download(fileName + '.tsv', formatContent(grades));
+    	download(fileName + '.csv', formatContent(grades));
     });
 
     function download(filename, text) {
@@ -120,9 +120,9 @@ $(document).ready(function() {
 	// Each line and respective grade are separated by a tab.
 	// Each sample is separated by a breakline character.
 	function formatContent(map) {
-		let f = "LineStart\tLineEnd\tGrade\n";
+		let f = "LineStart,LineEnd,Grade\n";
 		for (var [key, value] of map) {
-		  f += (key[0] + '\t' + key[1] + '\t' + value + '\n');
+		  f += (key[0] + ',' + key[1] + ',' + value + '\n');
 		}
 		return f;
 	};
