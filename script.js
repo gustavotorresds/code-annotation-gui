@@ -18,7 +18,9 @@ $(document).ready(function() {
 	    	var lines = contents.split('\n');
 	    	for(let i = 1; i <= lines.length; i++) {
 	    		let line = lines[i - 1];
-
+	    		line = line.replace('<', '&lt;');
+	    		line = line.replace('>', '&gt;');
+	    		
 	    		const row = $(document.createElement('tr'));
 	    		row.addClass('code-line');
 
